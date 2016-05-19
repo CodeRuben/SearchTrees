@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * the ListI interface. Linked List has methods which allow for
  * insertion and removal of elements, as well as a reversal 
  * method used to reverse the order of all of the elements in 
- * the list. 
+ * the list
  * 
  * @author Ruben Ramirez 
  * @param <E> the type of elements in the list

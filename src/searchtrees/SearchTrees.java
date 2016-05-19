@@ -10,7 +10,7 @@ import data.IPAddress;
 import data_structures.*;
 
 public class SearchTrees {
-
+  
     public static void main(String[] args) throws FileNotFoundException {
         SplayTree<IPAddress, String> splay = new SplayTree<>();
         AVLTree<IPAddress> avl = new AVLTree<>();

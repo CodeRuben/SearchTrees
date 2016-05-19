@@ -87,36 +87,36 @@ public class AVLTree<E> implements Iterable<E> {
     	E temp = null;
 
     	if(currentSize == 1) {
-    		temp = root.data;
-    		root = null;
-                currentSize--;
-    		return temp;
+            temp = root.data;
+            root = null;
+            currentSize--;
+            return temp;
     	}
     	node = getNode(root, obj);
     	
     	if(node == null)
-    		return null;
+            return null;
     	
     	// If node has zero subtrees
     	if(node.leftChild == null && node.rightChild == null) {
-    		if(((Comparable<E>)node.parent.data).compareTo(node.data) < 0) {
-    			temp = node.data;
-    			node.parent.rightChild = null;
-    			checkBalance(node.parent);
-    		}
-    		else {
-    			temp = node.data;
-    			node.parent.leftChild = null;
-    			checkBalance(node.parent);
-    		}
+            if(((Comparable<E>)node.parent.data).compareTo(node.data) < 0) {
+                temp = node.data;
+                node.parent.rightChild = null;
+                checkBalance(node.parent);
+            }
+            else {
+                temp = node.data;
+                node.parent.leftChild = null;
+                checkBalance(node.parent);
+            }
     	}
         // Node has left and right subtrees
         else if(node.leftChild != null && node.rightChild != null) {
-    		temp = node.data;
-    		E successor = findNext(node.data);
-    		delete(successor);
-    		node.data = successor;
-                flag = false;
+            temp = node.data;
+            E successor = findNext(node.data);
+            delete(successor);
+            node.data = successor;
+            flag = false;
     	}
     	// Node has a left subtree 
     	else if(node.leftChild != null) {
@@ -291,13 +291,13 @@ public class AVLTree<E> implements Iterable<E> {
         if(node == null)
             return 0;
         if(node.leftChild == null)
-        	leftHeight = -1;
+            leftHeight = -1;
         else
-        	leftHeight = node.leftChild.height;
+            leftHeight = node.leftChild.height;
         if(node.rightChild == null)
-        	rightHeight = -1;
+            rightHeight = -1;
         else
-        	rightHeight = node.rightChild.height;
+            rightHeight = node.rightChild.height;
         return leftHeight - rightHeight;
     }
 	
@@ -314,34 +314,34 @@ public class AVLTree<E> implements Iterable<E> {
     	while(currentNode != null) {
     		
             // Adjust the height of the current node
-    		if(currentSize > 1)
-    		    setHeight(currentNode);
+            if(currentSize > 1)
+                setHeight(currentNode);
 
-    		// If balance factor is not greater than 1, continue moving up the tree
-    		if(balanceFactor(node) >= -1 && balanceFactor(node) <= 1) {
-    			node = currentNode;
-    			currentNode = currentNode.parent;
-    		}
-    		// Imbalance in left subtree
-    		if(balanceFactor(node) > 1) {
-    			if(balanceFactor(node.leftChild) >= 0)  
-    				rightRotate(node);
-    			else {
-    				leftRotate(node.leftChild);
-    				rightRotate(node);
-    			}
-    		}	
-    		// Imbalance in right subtree
-            else if(balanceFactor(node) < -1) {
-                if(balanceFactor(node.rightChild) <= 0) 
-                    leftRotate(node);
+            // If balance factor is not greater than 1, continue moving up the tree
+            if(balanceFactor(node) >= -1 && balanceFactor(node) <= 1) {
+                node = currentNode;
+                currentNode = currentNode.parent;
+            }
+            // Imbalance in left subtree
+            if(balanceFactor(node) > 1) {
+                if(balanceFactor(node.leftChild) >= 0)  
+                    rightRotate(node);
                 else {
-                    rightRotate(node.rightChild);
-                    leftRotate(node);
+                    leftRotate(node.leftChild);
+                    rightRotate(node);
                 }
+            }	
+            // Imbalance in right subtree
+        else if(balanceFactor(node) < -1) {
+            if(balanceFactor(node.rightChild) <= 0) 
+                leftRotate(node);
+            else {
+                rightRotate(node.rightChild);
+                leftRotate(node);
             }
         }
     }
+}
 	
     /**
      * Performs a right rotation on the given node
@@ -377,7 +377,7 @@ public class AVLTree<E> implements Iterable<E> {
     
     /**
      * Performs a left rotation on the given node
-     * @param Node<E>, the node to be balanced
+     * @param Node<E>, the node to be balanced.
      */
     private void leftRotate(Node<E> node) {
     	Node<E> newTop = node.rightChild;
@@ -417,13 +417,13 @@ public class AVLTree<E> implements Iterable<E> {
 
         // Set null children heights to -1
         if(node.leftChild == null)
-        	leftHeight = -1;
+            leftHeight = -1;
         else
-        	leftHeight = node.leftChild.height;
+            leftHeight = node.leftChild.height;
         if(node.rightChild == null)
-        	rightHeight = -1;
+            rightHeight = -1;
         else
-        	rightHeight = node.rightChild.height;
+            rightHeight = node.rightChild.height;
         node.height = Math.max(leftHeight, rightHeight) + 1;
     }
     
@@ -442,42 +442,42 @@ public class AVLTree<E> implements Iterable<E> {
 	 *  @return an iterator that traverses the data in the AVL Tree
      */
 	public Iterator<E> iterator() {
-		return new AVLIterator();
+            return new AVLIterator();
 	}
 	
 	private class AVLIterator implements Iterator<E> {
-		private Node<E>[] array;
-		private int index;
-		
-		public AVLIterator() {
-			array = new Node[currentSize];
-			index = 0;
-			fillArray(root);
-			index = 0;
-		}
-		
-		public boolean hasNext() {
-			return index < array.length;
-		}
-		
-		public E next() {
-			return (E) array[index++].data;
-		}
-		
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-		
-		// Performs an in-order traversal of the tree and adds
-		// each element to an array.
-		private void fillArray(Node<E> node) {
-	        if(node != null) {
-	            fillArray(node.leftChild);
-	            array[index++] = node;
-	            fillArray(node.rightChild);
-	        }
-	    }
-	}
+            private Node<E>[] array;
+            private int index;
+
+            public AVLIterator() {
+                array = new Node[currentSize];
+                index = 0;
+                fillArray(root);
+                index = 0;
+            }
+
+            public boolean hasNext() {
+                return index < array.length;
+            }
+
+            public E next() {
+                return (E) array[index++].data;
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            // Performs an in-order traversal of the tree and adds
+            // each element to an array.
+            private void fillArray(Node<E> node) {
+            if(node != null) {
+                fillArray(node.leftChild);
+                array[index++] = node;
+                fillArray(node.rightChild);
+            }
+        }
+    }
 	
 	/*
 	 * Node inner class that holds a piece of data and references
