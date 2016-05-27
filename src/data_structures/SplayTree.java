@@ -66,6 +66,8 @@ public class SplayTree<K,V> implements Iterable<K> {
     public boolean contains(K key) {
         Node<K,V> node = new Node<>(key, null);
         
+        if(root == null) 
+            return false;
         splay(node);
         if(((Comparable<K>)key).compareTo(root.key) == 0) 
             return true;
@@ -80,6 +82,8 @@ public class SplayTree<K,V> implements Iterable<K> {
     public V getValue(K key) {
         Node<K,V> node = new Node<>(key, null);
         
+        if(root == null) 
+            return null;
         splay(node);
         if(((Comparable<K>)key).compareTo(root.key) == 0) 
             return root.value;
@@ -94,6 +98,8 @@ public class SplayTree<K,V> implements Iterable<K> {
     public K get(K key) {
         Node<K,V> node = new Node<>(key, null);
         
+        if(root == null) 
+            return null;
         splay(node);
         if(((Comparable<K>)key).compareTo(root.key) == 0) 
             return root.key;

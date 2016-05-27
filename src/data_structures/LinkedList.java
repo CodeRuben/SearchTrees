@@ -1,6 +1,5 @@
 package data_structures;
 
-import searchtrees.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
