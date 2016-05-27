@@ -39,6 +39,7 @@ public class SplayTree<K,V> implements Iterable<K> {
         // If element is already in the tree, override it's value
         if(((Comparable<K>)key).compareTo(root.key) == 0) {
             root.value = value;
+            root.key = key;
             return true;
         }
         
