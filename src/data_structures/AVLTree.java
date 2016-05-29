@@ -500,4 +500,27 @@ public class AVLTree<E> implements Iterable<E> {
             return (((Comparable<T>)data).compareTo(node.data));
         }
     }
+        
+        public void printTree() {
+        Queue<Node<E>> q = new Queue<>();
+        Node<E> node;
+        int level = 1;
+        
+        if(root != null) {
+            q.enqueue(root);
+            
+            while(!q.isEmpty()) {
+                node = q.dequeue();
+                System.out.print(node.data + " ");
+                
+                if(node != null) {
+                    if(node.leftChild != null)
+                        q.enqueue(node.leftChild);
+                    if(node.rightChild != null)
+                        q.enqueue(node.rightChild);
+                   
+                }
+            }
+        }
+    }    
 }
